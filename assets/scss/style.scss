@@ -1,0 +1,15 @@
+@import 'partials/base';
+
+.theme--light.auth--app--holder.v-application {
+  background-image: url('/auth-shape.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+  .v-main {
+    padding: 0 !important;
+  }
+  .auth--view {
+    width: 100%;
+  }
+}
