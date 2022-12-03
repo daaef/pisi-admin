@@ -42,7 +42,11 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '@/plugins/iconly.js' }],
+  plugins: [
+    { src: '@/plugins/iconly.js' },
+    { src: '~/plugins/repository' },
+    { src: '~/plugins/services.plugin.js' }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -61,17 +65,65 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/toast'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/'
+    baseURL: process.env.BASE_URL,
+    progress: false,
+    debug: false,
+    headers: {
+      'Content-type': 'application/json',
+      common: {
+        Accept: 'application/json, text/plain, */*'
+      }
+    }
+  },
+  toast: {
+    position: 'top-center',
+    register: [
+      // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      }
+    ]
   },
 
+  auth: {
+    strategies: {
+      local: {
+        user: {
+          property: 'data.user',
+          autoFetch: false
+        },
+        endpoints: {
+          login: { url: '/auth/sign-in', method: 'post' },
+          logout: false,
+          user: false
+        },
+        token: {
+          property: 'data.accessToken',
+          maxAge: 1800
+        }
+      }
+    },
+    redirect: {
+      login: '/',
+      logout: '/',
+      home: '/dashboard'
+    },
+    fullPathRedirect: true
+  },
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
@@ -105,5 +157,10 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  router: {
+    middleware: ['auth']
+  },
+  build: {
+    transpile: ['defu']
+  }
 }

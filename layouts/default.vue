@@ -5,10 +5,20 @@
         <nuxt-link class="flex items-center" to="/dashboard">
           <img class="img-contain" src="/auth-logo.png" alt="" />
         </nuxt-link>
-
-        <nuxt-link to="/" class="btn btn-primary">
-          <span class="text-white">Log out</span>
-        </nuxt-link>
+        <div class="inline-flex nav--links">
+          <nuxt-link
+            class="flex text-sm text-base-100 items-center mr-2"
+            to="/find-transaction"
+          >
+            Find transaction
+          </nuxt-link>
+          <nuxt-link class="flex text-sm items-center mr-2" to="/feedback">
+            Feedback
+          </nuxt-link>
+          <button class="btn btn-primary" @click="logout">
+            <span class="text-white">Log out</span>
+          </button>
+        </div>
       </div>
     </v-app-bar>
     <v-main>
@@ -24,6 +34,26 @@ export default {
     return {
       clipped: false
     }
+  },
+  methods: {
+    async logout() {
+      this.loading = true
+      try {
+        const response = await this.$auth.logout()
+        console.log('response is', response)
+        this.loading = false
+      } catch (err) {
+        console.log('We got an error folks', err)
+        this.loading = false
+      }
+    }
   }
 }
 </script>
+<style lang="scss">
+.nav--links {
+  a {
+    color: #0a0a0a;
+  }
+}
+</style>

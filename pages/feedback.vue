@@ -35,7 +35,7 @@
               :key="i"
               :class="{
                 'row--active':
-                  $route.path.indexOf(`/dashboard/${user.id}`) !== -1
+                  $route.path.indexOf(`/feedback/${user.id}`) !== -1
               }"
               @click="toggleTable(user.id, i)"
             >
@@ -140,7 +140,7 @@ export default {
     toggleTable(id, i) {
       this.resetActiveState()
       this.users[i].active = true
-      this.$router.push(`/dashboard/${id}`)
+      this.$router.push(`/feedback/${id}`)
     },
     resetActiveState() {
       this.users.forEach((user) => (user.active = false))
