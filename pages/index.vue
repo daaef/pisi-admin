@@ -37,10 +37,17 @@
           <button
             class="w-full btn btn-primary flex items-center"
             :class="loading ? 'loading' : ''"
-            @click.prevent="userLogin"
+            @click.prevent="$router.push('/dashboard')"
           >
             <span>Log in</span> <ic name="Arrow-Right" />
           </button>
+          <!-- <button
+            class="w-full btn btn-primary flex items-center"
+            :class="loading ? 'loading' : ''"
+            @click.prevent="userLogin"
+          >
+            <span>Log in</span> <ic name="Arrow-Right" />
+          </button> -->
         </div>
         <div class="w-full mt-5">
           <p class="text-center">

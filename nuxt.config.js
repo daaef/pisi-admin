@@ -157,9 +157,9 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  router: {
-    middleware: ['auth']
-  },
+  // router: {
+  //   middleware: ['auth']
+  // },
   build: {
     transpile: ['defu']
   }
