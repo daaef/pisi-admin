@@ -1,15 +1,15 @@
 import Auth from './auth'
-import Health from './health'
+import Crypto from './crypto'
 import Main from './main'
-import Payment from './payment'
-import Utils from './utils'
-import Vehicle from './vehicle'
+import Bank from './bank'
+import Country from './country'
+import KYC from './kyc'
 
 export default ($axios) => ({
   auth: Auth($axios),
-  health: Health($axios),
+  crypto: Crypto($axios),
   main: Main($axios),
-  payment: Payment($axios),
-  utils: Utils($axios),
-  vehicle: Vehicle($axios)
+  bank: Bank($axios),
+  country: Country($axios),
+  kyc: KYC($axios)
 })

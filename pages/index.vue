@@ -34,20 +34,20 @@
           </div>
         </div>
         <div class="w-full mt-5">
-          <button
+<!--          <button
             class="w-full btn btn-primary flex items-center"
             :class="loading ? 'loading' : ''"
             @click.prevent="$router.push('/dashboard')"
           >
             <span>Log in</span> <ic name="Arrow-Right" />
-          </button>
-          <!-- <button
+          </button>-->
+           <button
             class="w-full btn btn-primary flex items-center"
             :class="loading ? 'loading' : ''"
             @click.prevent="userLogin"
           >
             <span>Log in</span> <ic name="Arrow-Right" />
-          </button> -->
+          </button>
         </div>
         <div class="w-full mt-5">
           <p class="text-center">

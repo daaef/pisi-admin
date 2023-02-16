@@ -15,9 +15,13 @@ export default ($axios) => ({
    * Generate payment initialization URL upon setting the data necessary for initialization.
    * PUT
    **/
-  InitializePayment(payload) {
-    return $axios.$put('/user/payment/transaction/initialize',
-      payload,
-      { headers });
+  addBank(payload) {
+    return $axios.$post('/admin/add-bank', payload,       { headers });
   },
+  updateBank(payload) {
+    return $axios.$patch('/admin/update-bank', payload,       { headers });
+  },
+  deleteBank(payload) {
+    return $axios.$delete('/admin/remove-bank', payload,       { headers });
+  }
 })
