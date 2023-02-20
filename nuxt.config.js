@@ -104,12 +104,12 @@ export default {
       local: {
         user: {
           property: 'data.user',
-          autoFetch: false
+          autoFetch: true
         },
         endpoints: {
           login: { url: '/auth/sign-in', method: 'post' },
           logout: false,
-          user: false
+          user: { url: '/user' }
         },
         token: {
           property: 'data.accessToken',
@@ -157,9 +157,9 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  // router: {
-  //   middleware: ['auth']
-  // },
+  router: {
+    middleware: ['auth']
+  },
   build: {
     transpile: ['defu']
   }

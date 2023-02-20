@@ -10,7 +10,45 @@ export const strict = false
  **/
 const getDefaultState = () => {
   return {
-    nigerianStates: [],
+    countries: [],
+    users: [
+      {
+        id: 1,
+        name: 'Matthew Ero',
+        location: 'Nigeria',
+        active: false
+      },
+      {
+        id: 2,
+        name: 'Jace Rodman',
+        location: 'Nigeria',
+        active: false
+      },
+      {
+        id: 3,
+        name: 'Tunde Ojigho',
+        location: 'Nigeria',
+        active: false
+      },
+      {
+        id: 4,
+        name: 'Jace Rodman',
+        location: 'Nigeria',
+        active: false
+      },
+      {
+        id: 5,
+        name: 'Jace Rodman',
+        location: 'Nigeria',
+        active: false
+      },
+      {
+        id: 6,
+        name: 'Jace Rodman',
+        location: 'Nigeria',
+        active: false
+      }
+    ],
     errors: []
   }
 }
@@ -18,19 +56,40 @@ const getDefaultState = () => {
 export const state = () => getDefaultState()
 
 export const mutations = {
-  setErrors(state, payload) {
-    state.errors.push(payload)
+  setCountries(state, payload) {
+    state.countries = payload
+  },
+  setUsers(state, payload) {
+    state.users = payload
+  },
+  updateActiveUser(state, payload) {
+    state.users[payload].active = true
+  },
+  resetActiveUser(state) {
+    state.users.forEach((user) => (user.active = false))
   }
 }
 
 export const actions = {
   getUsers({ commit, rootState }, payload) {
-    return this.$api.handle(this.$repositories.main.getUsers, payload)
+    return this.$api
+      .handle(this.$repositories.main.getUsers, payload)
+      .then((resp) => commit('setUsers', resp.users))
+      .catch((err) => console.log('error', err))
+  },
+  getCountries({ commit, rootState }, payload) {
+    return this.$api
+      .handle(this.$repositories.country.getCountries, payload)
+      .then((resp) => commit('setCountries', resp.countries))
+      .catch((err) => console.log('error', err))
   }
 }
 
 export const getters = {
-  nigerianStates(state) {
-    return state.nigerianStates
+  users(state) {
+    return state.users
+  },
+  countries(state) {
+    return state.countries
   }
 }

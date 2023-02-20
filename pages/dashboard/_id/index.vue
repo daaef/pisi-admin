@@ -2,11 +2,14 @@
   <div class="details--tab exchange--tab">
     <div class="user--info">
       <div>
-        <h4 class="text-xl font-medium">Matthew Ero</h4>
-        <p class="text-primary text-xs">FGHJ-3438765</p>
+        <h4 class="text-xl font-medium">
+          {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+        </h4>
+        <p class="text-primary text-xs">{{ currentUser?.id }}</p>
       </div>
       <div class="text-gray-400 font-medium">
-        <i class="iconly-Location icli"></i> <span>Nigeria</span>
+        <i class="iconly-Location icli"></i>
+        <span>{{ currentCountry?.name }}</span>
       </div>
     </div>
     <div class="user--info">
@@ -30,7 +33,9 @@
     <div class="flex justify-end mt-8">
       <div class="">
         <button class="btn btn-primary" @click.prevent="show = true">
-          <span>Suspend</span>
+          <span>{{
+            $auth?.$state?.user?.active ? 'Deactivate' : 'Activate'
+          }}</span>
         </button>
       </div>
     </div>
@@ -66,12 +71,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'UserDetailsPage',
   data() {
     return {
       show: false
     }
+  },
+  computed: {
+    currentUser() {
+      return this.users.find((active) => {
+        return active.id === this.$route.params.id
+      })
+    },
+    currentCountry() {
+      return this.countries.find((active) => {
+        return active.id === this.currentUser.countryId
+      })
+    },
+    ...mapGetters({
+      users: 'users',
+      countries: 'countries'
+    })
   }
 }
 </script>

@@ -39,8 +39,10 @@
               }"
               @click="toggleTable(user.id, i)"
             >
-              <td>{{ user.name }}</td>
-              <td>{{ user.location }}</td>
+              <td>
+                {{ user?.firstName ?? 'Jon' }} {{ user?.lastName ?? 'Doe' }}
+              </td>
+              <td>{{ countries[`${user?.countryId - 1}`]?.name ?? 'None' }}</td>
             </tr>
           </tbody>
         </table>
@@ -51,107 +53,27 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'DashboardView',
-  data() {
-    return {
-      users: [
-        {
-          id: 1,
-          name: 'Matthew Ero',
-          location: 'Nigeria',
-          active: false
-        },
-        {
-          id: 2,
-          name: 'Jace Rodman',
-          location: 'Nigeria',
-          active: false
-        },
-        {
-          id: 3,
-          name: 'Tunde Ojigho',
-          location: 'Nigeria',
-          active: false
-        },
-        {
-          id: 4,
-          name: 'Jace Rodman',
-          location: 'Nigeria',
-          active: false
-        },
-        {
-          id: 5,
-          name: 'Jace Rodman',
-          location: 'Nigeria',
-          active: false
-        },
-        {
-          id: 6,
-          name: 'Jace Rodman',
-          location: 'Nigeria',
-          active: false
-        }
-      ]
-    }
+  computed: {
+    ...mapGetters({
+      users: 'users',
+      countries: 'countries'
+    })
   },
-  mounted() {
-    this.users = [
-      {
-        id: 1,
-        name: 'Matthew Ero',
-        location: 'Nigeria',
-        active: false
-      },
-      {
-        id: 2,
-        name: 'Jace Rodman',
-        location: 'Nigeria',
-        active: false
-      },
-      {
-        id: 3,
-        name: 'Tunde Ojigho',
-        location: 'Nigeria',
-        active: false
-      },
-      {
-        id: 4,
-        name: 'Jace Rodman',
-        location: 'Nigeria',
-        active: false
-      },
-      {
-        id: 5,
-        name: 'Jace Rodman',
-        location: 'Nigeria',
-        active: false
-      },
-      {
-        id: 6,
-        name: 'Jace Rodman',
-        location: 'Nigeria',
-        active: false
-      }
-    ]
-    this.getUsers()
+  async mounted() {
+    await this.$store.dispatch('getUsers', { createdAtDateStart: '2022-10-19' })
+    await this.$store.dispatch('getCountries')
   },
   methods: {
     toggleTable(id, i) {
       this.resetActiveState()
-      this.users[i].active = true
+      this.$store.commit('updateActiveUser', i)
       this.$router.push(`/dashboard/${id}`)
     },
     resetActiveState() {
-      this.users.forEach((user) => (user.active = false))
-    },
-    async getUsers() {
-      await this.$store
-        .dispatch('getUsers', {
-          createdAtDateStart: '2022-10-19'
-        })
-        .then((resp) => console.log('resp is', resp))
-        .catch((err) => console.log('error', err))
+      this.$store.commit('resetActiveUser')
     }
   }
 }
