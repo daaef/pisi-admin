@@ -69,6 +69,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/dayjs',
     '@nuxtjs/toast'
   ],
 

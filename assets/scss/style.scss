@@ -17,3 +17,23 @@
 .toasted-container.top-right {
   top: 0 !important;
 }
+
+  .v-menu__content {
+    z-index: 200000 !important;
+    .v-list-item:hover {
+      background: $primary;
+      cursor: pointer;
+      .v-list-item__title {
+        color: #fafafa;
+      }
+    }
+  }
+
+  .creator--content {
+    width: 100%;
+  }
+
+header.v-sheet.v-app-bar {
+  background: rgba(255, 255, 255, 0.64) !important;
+  backdrop-filter: blur(3px);
+}

@@ -16,12 +16,16 @@ export default ($axios) => ({
    * PUT
    **/
   addBank(payload) {
-    return $axios.$post('/admin/add-bank', payload,       { headers });
+    return $axios.$post('/admin/add-bank', payload, { headers });
+  },
+  getBanks(payload) {
+    return $axios.$get('/user/get-banks', { headers })
   },
   updateBank(payload) {
-    return $axios.$patch('/admin/update-bank', payload,       { headers });
+    return $axios.$patch('/admin/update-bank', payload, { headers });
   },
   deleteBank(payload) {
-    return $axios.$delete('/admin/remove-bank', payload,       { headers });
+    console.log('payload is', payload)
+    return $axios.$delete('/admin/remove-bank', payload, { headers });
   }
 })

@@ -12,12 +12,52 @@
         <span>{{ currentCountry?.name }}</span>
       </div>
     </div>
-    <div class="user--info">
+    <div class="user--info mt-3">
+      <div>
+        <h4 class="text-sm text-gray-400 font-medium">Email:</h4>
+      </div>
+      <div class="">
+        <span>{{ currentUser?.email }}</span>
+      </div>
+    </div>
+    <div class="user--info mt-3">
+      <div>
+        <h4 class="text-sm text-gray-400 font-medium">Verified Email:</h4>
+      </div>
+      <div class="">
+        <span>{{ currentUser?.emailVerified ? 'Yes' : 'No' }}</span>
+      </div>
+    </div>
+    <div class="user--info mt-3">
+      <div>
+        <h4 class="text-sm text-gray-400 font-medium">Uploaded Document:</h4>
+      </div>
+      <div class="">
+        <span>{{ currentUser?.identityDocument ? 'Yes' : 'No' }}</span>
+      </div>
+    </div>
+    <div class="user--info mt-3">
+      <div>
+        <h4 class="text-sm text-gray-400 font-medium">Added Selfie:</h4>
+      </div>
+      <div class="">
+        <span>{{ currentUser?.selfieImage ? 'Yes' : 'No' }}</span>
+      </div>
+    </div>
+    <div class="user--info mt-3">
+      <div>
+        <h4 class="text-sm text-gray-400 font-medium">Uploaded Utility Bill:</h4>
+      </div>
+      <div class="">
+        <span>{{ currentUser?.utilityBill ? 'Yes' : 'No' }}</span>
+      </div>
+    </div>
+    <div class="user--info mt-3">
       <div>
         <h4 class="text-sm text-gray-400 font-medium">Sign up date:</h4>
       </div>
       <div class="">
-        <span>14th August, 2022</span>
+        <span>{{ $dayjs(currentUser?.createdAt).format('MMMM DD, YYYY') }}</span>
       </div>
     </div>
     <div class="user--info mt-3">
@@ -34,7 +74,7 @@
       <div class="">
         <button class="btn btn-primary" @click.prevent="show = true">
           <span>{{
-            $auth?.$state?.user?.active ? 'Deactivate' : 'Activate'
+            currentUser?.active ? 'Deactivate' : 'Activate'
           }}</span>
         </button>
       </div>
@@ -52,12 +92,12 @@
               </div>
               <p class="py-4 text-center mb-0">
                 Are you sure you want to deactivate
-                <span class="text-primary">Matthew Ero?</span>
+                <span class="text-primary">{{ currentUser?.firstName }} {{ currentUser?.lastName }}?</span>
               </p>
               <div class="modal-action mt-0">
                 <button
                   class="btn btn-primary w-full"
-                  @click.prevent="show = false"
+                  @click.prevent="suspendUser"
                 >
                   Yes, suspend
                 </button>
@@ -77,7 +117,49 @@ export default {
   name: 'UserDetailsPage',
   data() {
     return {
-      show: false
+      show: false,
+      items: [
+        {
+          action: 'mdi-ticket',
+          items: [{ title: 'List Item' }],
+          title: 'Attractions',
+        },
+        {
+          action: 'mdi-silverware-fork-knife',
+          active: true,
+          items: [
+            { title: 'Breakfast & brunch' },
+            { title: 'New American' },
+            { title: 'Sushi' },
+          ],
+          title: 'Dining',
+        },
+        {
+          action: 'mdi-school',
+          items: [{ title: 'List Item' }],
+          title: 'Education',
+        },
+        {
+          action: 'mdi-human-male-female-child',
+          items: [{ title: 'List Item' }],
+          title: 'Family',
+        },
+        {
+          action: 'mdi-bottle-tonic-plus',
+          items: [{ title: 'List Item' }],
+          title: 'Health',
+        },
+        {
+          action: 'mdi-briefcase',
+          items: [{ title: 'List Item' }],
+          title: 'Office',
+        },
+        {
+          action: 'mdi-tag',
+          items: [{ title: 'List Item' }],
+          title: 'Promotions',
+        },
+      ],
     }
   },
   computed: {
@@ -95,6 +177,12 @@ export default {
       users: 'users',
       countries: 'countries'
     })
+  },
+  methods: {
+    async suspendUser() {
+      await this.$store.dispatch('toggleUserStatus', this.$route.params.id)
+      this.show = false
+    }
   }
 }
 </script>
