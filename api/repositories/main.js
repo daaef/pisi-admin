@@ -24,8 +24,11 @@ export default ($axios) => ({
   addCurrency(payload) {
     return $axios.$post('/admin/add-currency', payload, { headers })
   },
+  addStaff(payload) {
+    return $axios.$post('/admin/register-staff', payload, { headers })
+  },
   deleteCurrency(payload) {
-    return $axios.$delete('/admin/remove-currency', payload, { headers })
+    return $axios.$delete('/admin/remove-currency', { headers, data: payload })
   },
   retryBlockchainTransaction(payload) {
     return $axios.$get(`/transaction/retry-blockchain-transaction/${payload}`, { headers })

@@ -122,6 +122,15 @@ export const actions = {
     })
     .catch((err) => console.log('error', err))
   },
+  addStaff({commit, dispatch}, payload) {
+    return this.$api
+    .handle(this.$repositories.main.addStaff, payload)
+    .then((resp) => {
+      this.$toast.success('User Created')
+      dispatch('getUsers')
+    })
+    .catch((err) => console.log('error', err))
+  },
   deleteBank({commit, dispatch}, payload){
     console.log('payload', payload)
     return this.$api
@@ -130,6 +139,11 @@ export const actions = {
         this.$toast.success('Bank Deleted')
           dispatch('getBanks')
       })
+  },
+  deleteCurrency({commit, dispatch}, payload){
+    return this.$api
+      .handle(this.$repositories.main.deleteCurrency, payload)
+      .catch(err => console.log('error', err))
   }
 }
 

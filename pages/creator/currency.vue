@@ -46,7 +46,7 @@
                   Add Currency
                 </v-btn>
               </template>
-              <v-card>
+              <v-card class="inline-block">
                 <v-card-title>
                   <span class="text-h5">{{ formTitle }}</span>
                 </v-card-title>
@@ -57,9 +57,10 @@
                       <v-col
                         cols="12"
                         sm="12"
-                        md="8"
+                        md="6"
                       >
                         <v-text-field
+                          outlined
                           v-model="editedItem.name"
                           label="Name"
                         ></v-text-field>
@@ -67,52 +68,27 @@
                       <v-col
                         cols="12"
                         sm="12"
-                        md="8"
+                        md="6"
                       >
                         <v-text-field
-                          v-model="editedItem.abbreviation"
-                          label="Abbreviation"
+                          outlined
+                          v-model="editedItem.currencyCode"
+                          label="Currency Code"
                         ></v-text-field>
                       </v-col>
                       <v-col
                         cols="12"
                         sm="12"
-                        md="8"
+                        md="12"
                       >
-                        <v-text-field
-                          v-model="editedItem.blockchain"
-                          label="Chain (Blockchain)"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="12"
-                        md="8"
-                      >
-                        <v-text-field
-                          v-model="editedItem.network"
-                          label="Network"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="12"
-                        md="8"
-                      >
-                        <v-text-field
-                          v-model="editedItem.imgUri"
-                          label="Icon URL"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="12"
-                        md="8"
-                      >
-                        <v-text-field
-                          v-model="editedItem.depositWalletAddress"
-                          label="Deposit Waller Address"
-                        ></v-text-field>
+                        <v-select
+                          :items="countries"
+                          label="Country ID"
+                          v-model="editedItem.countryId"
+                          outlined
+                          item-text="name"
+                          item-value="id"
+                        ></v-select>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -152,24 +128,10 @@
             </v-dialog>
           </v-toolbar>
         </template>
-        <template v-slot:[`item.imgUri`]="{ item }">
-          <v-img
-            max-height="35"
-            contain
-            max-width="35"
-            :src="item.imgUri"
-          ></v-img>
-        </template>
         <template v-slot:[`item.actions`]="{ item }">
           <v-icon
             small
-            class="mr-2"
-            @click="editItem(item)"
-          >
-            mdi-pencil
-          </v-icon>
-          <v-icon
-            small
+            color="error"
             @click="deleteItem(item)"
           >
             mdi-delete
@@ -200,14 +162,12 @@ export default {
       dialogDelete: false,
       editedIndex: -1,
       editedItem: {
-        id: "jhsdfbsd8f77dfjsdhfs7fsdfsf",
-        countryId: "1",
+        countryId: 2,
         name: "Naira",
         currencyCode: "EUR"
       },
       defaultItem: {
-        id: "jhsdfbsd8f77dfjsdhfs7fsdfsf",
-        countryId: "1",
+        countryId: 2,
         name: "Naira",
         currencyCode: "EUR"
       },
@@ -228,16 +188,13 @@ export default {
       ],
     }
   },
-  mounted() {
-    this.editedItem.id = this.currencies.length + 1;
-    this.defaultItem.id = this.currencies.length + 1;
-  },
   computed: {
     formTitle () {
       return this.editedIndex === -1 ? 'Add Currency' : 'Edit Currency'
     },
     ...mapGetters([
-      'currencies'
+      'countries',
+      'currencies',
     ])
   },
   methods: {
@@ -253,10 +210,12 @@ export default {
       this.dialogDelete = true
     },
 
-    deleteItemConfirm () {
-      this.$store.dispatch('deleteBank', {
-        bankId: this.editedItem.id
+    async deleteItemConfirm() {
+      console.log(this.editedItem)
+      await this.$store.dispatch('deleteCurrency', {
+        currencyId: this.editedItem.id
       })
+      await this.$store.dispatch('getCurrencies')
       this.closeDelete()
     },
 

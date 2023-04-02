@@ -15,7 +15,7 @@
       </v-card-title>
       <v-data-table
         :headers="headers"
-        :items="countries"
+        :items="users"
         :search="search"
         sort-by="id"
       >
@@ -23,7 +23,7 @@
           <v-toolbar
             flat
           >
-            <v-toolbar-title>Countries</v-toolbar-title>
+            <v-toolbar-title>Users</v-toolbar-title>
             <v-divider
               class="mx-4"
               inset
@@ -43,7 +43,7 @@
                   v-bind="attrs"
                   v-on="on"
                 >
-                  Add Country
+                  Add User
                 </v-btn>
               </template>
               <v-card>
@@ -60,8 +60,10 @@
                         md="4"
                       >
                         <v-text-field
-                          v-model="editedItem.id"
-                          label="ID"
+                          v-model="editedItem.firstName"
+                          label="First Name"
+                          outlined
+                          dense
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -70,8 +72,10 @@
                         md="4"
                       >
                         <v-text-field
-                          v-model="editedItem.name"
-                          label="Name"
+                          v-model="editedItem.lastName"
+                          label="Last Name"
+                          outlined
+                          dense
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -80,8 +84,10 @@
                         md="4"
                       >
                         <v-text-field
-                          v-model="editedItem.code"
-                          label="Country Code"
+                          v-model="editedItem.email"
+                          label="Email"
+                          outlined
+                          dense
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -89,20 +95,41 @@
                         sm="6"
                         md="4"
                       >
-                        <v-text-field
-                          v-model="editedItem.regex"
-                          label="Regex"
-                        ></v-text-field>
+                        <v-select
+                          :items="countries"
+                          label="Select Roles"
+                          v-model="editedItem.countryId"
+                          outlined
+                          dense
+                          item-text="name"
+                          item-value="id"
+                        ></v-select>
                       </v-col>
                       <v-col
                         cols="12"
                         sm="6"
                         md="4"
                       >
-                        <v-text-field
-                          v-model="editedItem.ext"
-                          label="Ext"
-                        ></v-text-field>
+                        <v-select
+                        v-model="editedItem.roles"
+                        :items="roles"
+                        label="Select Role"
+                        outlined
+                        dense
+                        multiple
+                      >
+                        <template v-slot:selection="{ item, index }">
+                          <v-chip v-if="index === 0">
+                            <span>{{ item }}</span>
+                          </v-chip>
+                          <span
+                            v-if="index === 1"
+                            class="grey--text text-caption"
+                          >
+                            (+{{ editedItem.roles.length - 1 }} others)
+                          </span>
+                        </template>
+                      </v-select>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -178,18 +205,19 @@ export default {
       dialogDelete: false,
       editedIndex: -1,
       editedItem: {
-        id: 0,
-        name: 'Nigeria',
-        code: 'NG',
-        regex: `^['"]?\\d{10,11}['"]?$`,
-        ext: '+123',
+        firstName: 'Aef',
+        lastName: 'Badmus',
+        email: `badmusa21@gmail.com`,
+        countryId: 1,
+        roles: ['ADMIN'],
       },
+      roles: ['ADMIN', 'CUSTOMER'],
       defaultItem: {
-        id: 0,
-        name: 'Nigeria',
-        code: 'NG',
-        regex: `^['"]?\\d{10,11}['"]?$`,
-        ext: '+123',
+        firstName: 'Aef',
+        lastName: 'Badmus',
+        email: `badmusa21@gmail.com`,
+        countryId: 1,
+        roles: ['ADMIN'],
       },
       headers: [
         {
@@ -198,44 +226,41 @@ export default {
           align: 'start'
         },
         {
-          text: 'Name',
+          text: 'First Name',
           align: 'start',
-          value: 'name',
+          value: 'firstName',
         },
-        { text: 'Country Code', value: 'code' },
-        { text: 'Regex', value: 'regex' },
-        { text: 'Ext', value: 'ext' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Last Name', value: 'lastName' },
+        { text: 'Email', value: 'email' },
+        { text: 'Country ID', value: 'countryId' },
+        // { text: 'Actions', value: 'roles', sortable: false },
       ],
     }
   },
-  mounted() {
-    this.editedItem.id = this.countries.length + 1;
-    this.defaultItem.id = this.countries.length + 1;
-  },
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'Add Country' : 'Edit Country'
+      return this.editedIndex === -1 ? 'Add User' : 'Edit User'
     },
     ...mapGetters([
+      'users',
       'countries'
     ])
   },
   methods: {
     editItem (item) {
-      this.editedIndex = this.countries.indexOf(item)
+      this.editedIndex = this.users.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem (item) {
-      this.editedIndex = this.countries.indexOf(item)
+      this.editedIndex = this.users.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
     deleteItemConfirm () {
-      this.countries.splice(this.editedIndex, 1)
+      this.users.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -256,7 +281,7 @@ export default {
     },
 
     save () {
-      this.$store.dispatch('addCountry', this.editedItem)
+      this.$store.dispatch('addStaff', this.editedItem)
       this.close()
     },
   }

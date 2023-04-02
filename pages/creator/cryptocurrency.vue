@@ -57,9 +57,10 @@
                       <v-col
                         cols="12"
                         sm="12"
-                        md="8"
+                        md="6"
                       >
                         <v-text-field
+                          outlined
                           v-model="editedItem.name"
                           label="Name"
                         ></v-text-field>
@@ -67,9 +68,10 @@
                       <v-col
                         cols="12"
                         sm="12"
-                        md="8"
+                        md="6"
                       >
                         <v-text-field
+                          outlined
                           v-model="editedItem.abbreviation"
                           label="Abbreviation"
                         ></v-text-field>
@@ -77,9 +79,10 @@
                       <v-col
                         cols="12"
                         sm="12"
-                        md="8"
+                        md="6"
                       >
                         <v-text-field
+                          outlined
                           v-model="editedItem.blockchain"
                           label="Chain (Blockchain)"
                         ></v-text-field>
@@ -87,9 +90,10 @@
                       <v-col
                         cols="12"
                         sm="12"
-                        md="8"
+                        md="6"
                       >
                         <v-text-field
+                          outlined
                           v-model="editedItem.network"
                           label="Network"
                         ></v-text-field>
@@ -97,9 +101,10 @@
                       <v-col
                         cols="12"
                         sm="12"
-                        md="8"
+                        md="6"
                       >
                         <v-text-field
+                          outlined
                           v-model="editedItem.imgUri"
                           label="Icon URL"
                         ></v-text-field>
@@ -107,9 +112,10 @@
                       <v-col
                         cols="12"
                         sm="12"
-                        md="8"
+                        md="6"
                       >
                         <v-text-field
+                          outlined
                           v-model="editedItem.depositWalletAddress"
                           label="Deposit Waller Address"
                         ></v-text-field>
@@ -288,7 +294,7 @@ export default {
     },
 
     save () {
-      this.$store.dispatch('addCryptocurrency', this.editedItem)
+      this.$store.dispatch('addCurrency', this.editedItem)
       this.close()
     },
   }
