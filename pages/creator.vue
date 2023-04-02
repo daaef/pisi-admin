@@ -49,7 +49,9 @@ export default {
   name: 'Creator',
   async beforeMount() {
     await this.$store.dispatch('getCountries')
-    await this.$store.dispatch('getUsers')
+    await this.$store.dispatch('getUsers', {
+      createdAtDateStart: '2022-10-19'
+    })
     await this.$store.dispatch('getCryptoCurrencies')
     await this.$store.dispatch('getCurrencies')
   }

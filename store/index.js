@@ -127,7 +127,9 @@ export const actions = {
     .handle(this.$repositories.main.addStaff, payload)
     .then((resp) => {
       this.$toast.success('User Created')
-      dispatch('getUsers')
+      dispatch('getUsers', {
+        createdAtDateStart: '2022-10-19'
+      })
     })
     .catch((err) => console.log('error', err))
   },
