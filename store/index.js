@@ -144,6 +144,22 @@ export const actions = {
     return this.$api
       .handle(this.$repositories.main.deleteCurrency, payload)
       .catch(err => console.log('error', err))
+  },
+  deleteCountry({commit, dispatch}, payload){
+    return this.$api
+      .handle(this.$repositories.country.deleteCountry, payload)
+      .then(()=> {
+        dispatch('getCountries')
+      })
+      .catch(err => console.log('error', err))
+  },
+  updateCountry({commit, dispatch}, payload){
+    return this.$api
+      .handle(this.$repositories.country.updateCountry, payload)
+      .then(()=> {
+        dispatch('getCountries')
+      })
+      .catch(err => console.log('error', err))
   }
 }
 

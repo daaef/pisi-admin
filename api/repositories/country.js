@@ -21,7 +21,7 @@ export default ($axios) => ({
     return $axios.$patch('/admin/update-country', payload, { headers })
   },
   deleteCountry(payload) {
-    return $axios.$delete('/admin/remove-country', payload, { headers })
+    return $axios.$delete(`/admin/delete-country/${payload}`, { headers})
   },
   uploadCountry(payload) {
     return $axios.$post('/admin/upload-countries', payload, { headers })
