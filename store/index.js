@@ -95,6 +95,15 @@ export const actions = {
     })
     .catch((err) => console.log('error', err))
   },
+  addCurrency({commit, dispatch}, payload) {
+    return this.$api
+    .handle(this.$repositories.main.addCurrency, payload)
+    .then((resp) => {
+      this.$toast.success('Currency Created')
+      dispatch('getCurrencies')
+    })
+    .catch((err) => console.log('error', err))
+  },
   addCryptocurrency({commit, dispatch}, payload) {
     return this.$api
     .handle(this.$repositories.crypto.addCryptoCurrency, payload)

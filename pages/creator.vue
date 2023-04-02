@@ -51,6 +51,7 @@ export default {
     await this.$store.dispatch('getCountries')
     await this.$store.dispatch('getUsers')
     await this.$store.dispatch('getCryptoCurrencies')
+    await this.$store.dispatch('getCurrencies')
   }
 }
 </script>

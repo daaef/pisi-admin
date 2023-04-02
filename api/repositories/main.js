@@ -16,7 +16,7 @@ export default ($axios) => ({
     return $axios.$post('/admin/get-users', payload, { headers })
   },
   getCurrencies(payload) {
-    return $axios.$post('/user/get-currencies', payload, { headers })
+    return $axios.$get('/user/get-currencies', payload, { headers })
   },
   addFee(payload) {
     return $axios.$post('/admin/add-fee', payload, { headers })
