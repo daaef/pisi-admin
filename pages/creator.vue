@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard--container justify-center">
-    <div class="creator--content pt-5">
+    <div class="creator--content dashboard-view pt-5">
       <h3 class="text-2xl font-medium mb-5 text-center">Manage Assets for User Platform</h3>
-      <div class="tabs justify-center mb-10">
+<!--      <div class="tabs justify-center mb-10">
         <nuxt-link
           :exact-active-class="'tab-active'"
           to="/creator/country"
@@ -17,13 +17,13 @@
         >
           User
         </nuxt-link>
-<!--        <nuxt-link
+&lt;!&ndash;        <nuxt-link
           :exact-active-class="'tab-active'"
           to="/creator/bank"
           class="tab tab-lifted"
         >
           Bank
-        </nuxt-link>-->
+        </nuxt-link>&ndash;&gt;
         <nuxt-link
           :exact-active-class="'tab-active'"
           to="/creator/cryptocurrency"
@@ -38,7 +38,7 @@
         >
           Currency
         </nuxt-link>
-      </div>
+      </div>-->
       <nuxt-child :key="$route.name" />
     </div>
   </div>
