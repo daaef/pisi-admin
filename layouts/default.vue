@@ -5,15 +5,26 @@
         v-model="nav"
         permanent
       >
+        <v-subheader class="mb-8">
+          <nuxt-link class="flex items-center" to="/dashboard">
+            <img class="img-contain" src="/auth-logo.png" alt="" />
+          </nuxt-link>
+        </v-subheader>
+        <v-list>
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title class="text-h6">
+                {{ $auth.$state.user.firstName }}
+                {{ $auth.$state.user.lastName }}
+              </v-list-item-title>
+              <v-list-item-subtitle>{{ $auth.$state.user.email }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-divider></v-divider>
           <v-list
-            shaped
-            dense
+            nav
           >
-            <v-subheader class="mb-8">
-              <nuxt-link class="flex items-center" to="/dashboard">
-                <img class="img-contain" src="/auth-logo.png" alt="" />
-              </nuxt-link>
-            </v-subheader>
             <v-list-item-group>
               <v-list-item to="/dashboard">
                 <v-list-item-content>
@@ -22,34 +33,32 @@
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item to="/creator/country">
-                <v-list-item-content>
-                  <v-list-item-title>
-                    Countries
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item to="/creator/cryptocurrency">
-                <v-list-item-content>
-                  <v-list-item-title>
-                    Cryptocurrencies
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item to="/creator/currency">
-                <v-list-item-content>
-                  <v-list-item-title>
-                    Currencies
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item to="/creator/user">
-                <v-list-item-content>
-                  <v-list-item-title>
-                    Users
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
+              <v-list-group :class="{active: $route.name.includes('creator')}">
+                <template v-slot:activator>
+                  <v-list-item-title>Manage</v-list-item-title>
+                </template>
+                <v-list-item to="/creator/country">
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      Countries
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item to="/creator/cryptocurrency">
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      Cryptocurrencies
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item to="/creator/currency">
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      Currencies
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-group>
             </v-list-item-group>
           </v-list>
       </v-navigation-drawer>
@@ -110,6 +119,20 @@ export default {
   }
 }
 #__layout {
+  .v-navigation-drawer {
+    min-width: 256px;
+    .v-list-group {
+      .v-list-group__header[aria-expanded="true"], &.active > .v-list-group__header{
+        background: rgb(148 72 220);
+        .v-list-item__title, .v-icon {
+          color: white
+        }
+      }
+      .v-list-group__items {
+        padding-left: 10px;
+      }
+    }
+  }
   main.v-main {
     padding-top: 0 !important;
     .dashboard-view {
@@ -118,7 +141,7 @@ export default {
       padding: 0 10px;
     }
   }
-  .v-list-item--active {
+  .v-list-item--active:not(.v-list-group__header) {
     background: #2936ac !important;
     .v-list-item__icon, .v-list-item__title{
       color: #fafafa;
